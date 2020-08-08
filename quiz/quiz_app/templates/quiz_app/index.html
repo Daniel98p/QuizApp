@@ -4,6 +4,12 @@
 {% if latest_question %}
 <h1> {{latest_question.question_text}} </h1>
 {% else %}
-<p> No quiz available </p>
+<p> No question available </p>
 {% endif %}
+<form action="{% url 'render-quiz' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit">
+</form>
+
 {% endblock %}

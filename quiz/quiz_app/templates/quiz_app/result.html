@@ -1,0 +1,10 @@
+{% extends 'quiz_app/base.html' %}
+
+{% block content %}
+{% if selected_choice_obj.question_id == question.id %}
+<p> Good </p>
+{% else %}
+<p> Wrong </p>
+{% endif %}
+
+{% endblock %}
