@@ -1,10 +1,14 @@
 {% extends 'quiz_app/base.html' %}
+{% load index %}
 
 {% block content %}
-{% if selected_choice_obj.question_id == question.id %}
+{% for number in '012'|make_list %}
+{% if selected_choices_id|index:forloop.counter0 == questions_id|index:forloop.counter0 %}
 <p> Good </p>
 {% else %}
 <p> Wrong </p>
 {% endif %}
+{% endfor %}
+
 
 {% endblock %}

@@ -13,25 +13,34 @@ class WelcomeView(View):
 
 
 def render_quiz(request):
-    latest_question = Question.objects.last()
+    questions = Question.objects.all()
     answers = Answer.objects.all()
     if request.method == 'POST':
-        form = QuizForm(request.POST, answers=answers)
+        form = QuizForm(request.POST, answers=answers, questions=questions)
         if form.is_valid():
-            request.session["choice"] = form.cleaned_data["choice"]
+            request.session["question_1"] = form.cleaned_data["question_1"]
+            request.session["question_2"] = form.cleaned_data["question_2"]
+            request.session["question_3"] = form.cleaned_data["question_3"]
             return redirect('/quiz_app/1/results/')
     else:
-        form = QuizForm(answers=answers)
-    context = {"latest_question": latest_question, "form": form}
+        form = QuizForm(answers=answers, questions=questions)
+    context = {"questions": questions, "form": form}
     return render(request, "quiz_app/index.html", context=context)
 
 
 def show_results(request):
-    question = Question.objects.last()
+    questions = Question.objects.all()
+    questions_id = [question.id for question in questions]
     try:
-        selected_choice = request.session.get('choice')
+        selected_choice_1 = request.session.get('question_1')
+        selected_choice_2 = request.session.get('question_2')
+        selected_choice_3 = request.session.get('question_3')
     except KeyError:
         return HttpResponse("There is no choice")
-    selected_choice_obj = Answer.objects.get(answer_text=selected_choice)
-    context = {"question": question, "selected_choice_obj": selected_choice_obj}
+    selected_choice_obj_1 = Answer.objects.get(answer_text=selected_choice_1)
+    selected_choice_obj_2 = Answer.objects.get(answer_text=selected_choice_2)
+    selected_choice_obj_3 = Answer.objects.get(answer_text=selected_choice_3)
+    selected_choices_question_id = [selected_choice_obj_1.question_id, selected_choice_obj_2.question_id,
+                                    selected_choice_obj_3.question_id]
+    context = {"questions_id": questions_id, "selected_choices_id": selected_choices_question_id}
     return render(request, "quiz_app/result.html", context=context)
