@@ -42,5 +42,10 @@ def show_results(request):
     selected_choice_obj_3 = Answer.objects.get(answer_text=selected_choice_3)
     selected_choices_question_id = [selected_choice_obj_1.question_id, selected_choice_obj_2.question_id,
                                     selected_choice_obj_3.question_id]
-    context = {"questions_id": questions_id, "selected_choices_id": selected_choices_question_id}
+    good_answers = 0
+    for question, choice in zip(questions_id, selected_choices_question_id):
+        if question == choice:
+            good_answers += 1
+    context = {"questions_id": questions_id, "selected_choices_id": selected_choices_question_id,
+               "good_answers": good_answers}
     return render(request, "quiz_app/result.html", context=context)

@@ -4,11 +4,11 @@
 {% block content %}
 {% for number in '012'|make_list %}
 {% if selected_choices_id|index:forloop.counter0 == questions_id|index:forloop.counter0 %}
-<p> Good </p>
+<p>{{forloop.counter}} Good </p>
 {% else %}
-<p> Wrong </p>
+<p>{{forloop.counter}} Wrong </p>
 {% endif %}
 {% endfor %}
-
+<p> Number of good answers: {{good_answers}}</p>
 
 {% endblock %}
