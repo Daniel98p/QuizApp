@@ -1,5 +1,13 @@
-{% extends 'accounts/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
-<p> Registration page </p>
+<p> Login page</p>
+{% if user.is_authenticated %}
+  You are logged in  {{ user.username }}!
+  <p><a href="{% url 'logout' %}">sign out</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <p><a href="{% url 'signup' %}">sign up</a></p>
+  <p><a href="{% url 'login' %}">sign in </a></p>
+{% endif %}
 {% endblock %}
