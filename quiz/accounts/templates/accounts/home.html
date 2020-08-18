@@ -5,6 +5,7 @@
 {% if user.is_authenticated %}
   You are logged in  {{ user.username }}
   <p><a href="{% url 'logout' %}">sign out</a></p>
+  <p><a href="{% url 'quiz_app:select-quiz' %}">Select quiz</a></p>
 {% else %}
   <p>You are not logged in</p>
   <p><a href="{% url 'signup' %}">sign up</a></p>

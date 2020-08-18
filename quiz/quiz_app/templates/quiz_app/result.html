@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% load index %}
-    {% if user.is_authenticated %}
     <p><a href="{% url 'logout' %}">sign out</a></p>
-    {% else %}
-    <p>You are not logged in</p>
 {% block content %}
 {% for number in '012'|make_list %}
 {% if selected_choices_id|index:forloop.counter0 == questions_id|index:forloop.counter0 %}
@@ -13,5 +10,6 @@
 {% endif %}
 {% endfor %}
 <p> Number of good answers: {{good_answers}}</p>
+<p><a href="{% url 'quiz_app:select-quiz' %}">Try again</a></p>
 
 {% endblock %}

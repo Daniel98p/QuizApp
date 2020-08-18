@@ -1,16 +1,18 @@
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views import View
+from django.contrib.auth.decorators import login_required
 from .models import Question, Answer
 from .forms import QuizForm
 
 
+@login_required
 def select_quiz(request):
     question = Question.objects.last()
     context = {"question": question}
     return render(request, 'quiz_app/selector.html', context=context)
 
 
+@login_required
 def render_quiz(request):
     questions = Question.objects.all()
     answers = Answer.objects.all()
@@ -27,6 +29,7 @@ def render_quiz(request):
     return render(request, "quiz_app/index.html", context=context)
 
 
+@login_required
 def show_results(request):
     questions = Question.objects.all()
     questions_id = [question.id for question in questions]
