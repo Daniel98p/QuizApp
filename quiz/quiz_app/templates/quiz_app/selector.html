@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+    {% if user.is_authenticated %}
+    <p><a href="{% url 'logout' %}">sign out</a></p>
+    {% else %}
+    <p>You are not logged in</p>
+{% endif %}
+<h1> Please select a quiz </h1>
+<li><a href="{% url 'render-quiz' %}"> question.category quiz </a></li>
+{% endblock %}

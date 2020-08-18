@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load index %}
-
+    {% if user.is_authenticated %}
+    <p><a href="{% url 'logout' %}">sign out</a></p>
+    {% else %}
+    <p>You are not logged in</p>
 {% block content %}
 {% for number in '012'|make_list %}
 {% if selected_choices_id|index:forloop.counter0 == questions_id|index:forloop.counter0 %}

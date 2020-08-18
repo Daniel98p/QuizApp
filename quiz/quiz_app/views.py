@@ -5,11 +5,10 @@ from .models import Question, Answer
 from .forms import QuizForm
 
 
-class WelcomeView(View):
-    greeting = "Welcome in the main page"
-
-    def get(self, request):
-        return HttpResponse(self.greeting)
+def select_quiz(request):
+    question = Question.objects.last()
+    context = {"question": question}
+    return render(request, 'quiz_app/selector.html', context=context)
 
 
 def render_quiz(request):
