@@ -2,5 +2,7 @@
 {% block content %}
     <p><a href="{% url 'logout' %}">sign out</a></p>
 <h1> Please select a quiz </h1>
-<li><a href="{% url 'quiz_app:render-quiz' %}"> {{question.category}} quiz </a></li>
+{% for quiz in quizzes %}
+<li><a href="{% url 'quiz_app:render-quiz' quiz.id %}"> {{quiz.name}} quiz </a></li>
+{% endfor %}
 {% endblock %}
