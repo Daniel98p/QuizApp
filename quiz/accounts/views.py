@@ -1,5 +1,4 @@
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import UserCreationForm
+from .forms import CustomUserCreationForm
 from django.shortcuts import render, redirect
 
 
@@ -8,12 +7,8 @@ def home(request):
 
 
 def signup(request):
-    form = UserCreationForm(request.POST)
+    form = CustomUserCreationForm(request.POST, request.FILES)
     if form.is_valid():
         form.save()
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password1')
-        user = authenticate(username=username, password=password)
-        login(request, user)
         return redirect('home')
     return render(request, 'accounts/signup.html', {'form': form})
