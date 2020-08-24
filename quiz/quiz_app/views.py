@@ -3,6 +3,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Question, Answer, Quiz
 from .forms import QuizForm
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 @login_required
@@ -46,12 +49,21 @@ def show_results(request, quiz_id):
     selected_choice_obj_3 = Answer.objects.get(answer_text=selected_choice_3)
     selected_choices_question_id = [selected_choice_obj_1.question_id, selected_choice_obj_2.question_id,
                                     selected_choice_obj_3.question_id]
-    print(questions_id)
-    print(selected_choice_obj_1.question_id)
     good_answers = 0
     for question, choice in zip(questions_id, selected_choices_question_id):
         if question == choice:
             good_answers += 1
+    if request.user.is_authenticated:
+        request.user.points = request.user.points + good_answers
+        request.user.save()
     context = {"questions_id": questions_id, "selected_choices_id": selected_choices_question_id,
                "good_answers": good_answers}
     return render(request, "quiz_app/result.html", context=context)
+
+
+@login_required
+def show_ranking(request):
+    users_list = User.objects.all()
+    users = sorted(users_list, key=lambda x: x.points, reverse=True)
+    context = {"users": users}
+    return render(request, "quiz_app/ranking.html", context=context)

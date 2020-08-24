@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1> Ranking of the best quiz users </h1>
+<ol>
+{% for user in users %}
+<li> {{user.username}} Points: {{user.points}} </li>
+{% endfor %}
+</ol>
+<p><a href="{% url 'quiz_app:select-quiz' %}">Select quiz</a></p>
+{% endblock %}
