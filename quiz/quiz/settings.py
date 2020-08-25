@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'quiz_app',
+    'rest_framework',
+    'api.apps.ApiConfig'
 ]
 
 
